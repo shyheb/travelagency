@@ -82,6 +82,7 @@ public class Controller {
          userRepository.save(legencyUser);
          return new ResponseEntity<>(HttpStatus.OK);
 
+
     }
 
 
