@@ -1,6 +1,7 @@
 package com.ditraacademy.travelagency.core.voyage;
 
 import com.ditraacademy.travelagency.core.destination.Destination;
+import com.ditraacademy.travelagency.core.destination.DestinationRepository;
 import com.ditraacademy.travelagency.utility.ErrorResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class VoyageServices {
     @Autowired
     private VoyageRepository voyageRepository;
+    @Autowired
+    private DestinationRepository destinationRepository;
 
     public ResponseEntity<?> createVoyage(Voyage voyage){
 
@@ -29,7 +32,14 @@ public class VoyageServices {
         if (voyage.getPrix() == null)
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : PRIX IS NULL "), HttpStatus.BAD_REQUEST);
 
+        if (voyage.getDestination().getId() == 0)
+            return new ResponseEntity<>(new ErrorResponseEntity("ERROR : ID DESTINATION IS NULL "), HttpStatus.BAD_REQUEST);
 
+        Optional<Destination> destinationOptional = destinationRepository.findById(voyage.getDestination().getId());
+        if (!destinationOptional.isPresent())
+            return new ResponseEntity<>(new ErrorResponseEntity("ERROR : DESTINATION IS NOT NOT FOUND "),HttpStatus.BAD_REQUEST);
+
+        voyage.setDestination(destinationOptional.get());
         voyage = voyageRepository.save(voyage);
 
         return  new ResponseEntity<>(voyage, HttpStatus.OK);
@@ -82,6 +92,7 @@ public class VoyageServices {
         voyageRepository.save(voyageLegency);
 
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
