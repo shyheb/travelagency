@@ -17,7 +17,7 @@ public class VoyageController {
         return voyageServices.createVoyage(voyage);
     }
 
-    @GetMapping("/voyage")
+    @GetMapping("/voyages")
     public List<Voyage> getVoyages(){
         return voyageServices.getVoyages();
     }
@@ -35,5 +35,10 @@ public class VoyageController {
     @PutMapping("/voyage/{id}")
     public ResponseEntity<?> updatevoyage(@PathVariable int id,@RequestBody Voyage updatedvoyage){
         return voyageServices.updateVoyage(id,updatedvoyage);
+    }
+
+    @GetMapping("/voyage/price")
+    public List<Voyage> getVoyageByPrice(@RequestParam double minPrice, @RequestParam double maxPrice){
+        return  voyageServices.getVoyageByPrice(minPrice,maxPrice);
     }
 }

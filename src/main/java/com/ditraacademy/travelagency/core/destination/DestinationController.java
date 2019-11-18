@@ -13,8 +13,8 @@ public class DestinationController {
     private DestinationServices destinationServices;
 
     @PostMapping("/destination")
-    public ResponseEntity<?> createDestination(@RequestBody Destination Destination){
-        return destinationServices.createDestination(Destination);
+    public ResponseEntity<?> createDestination(@RequestBody Destination destination){
+        return destinationServices.createDestination(destination);
     }
 
     @GetMapping("/destinations")

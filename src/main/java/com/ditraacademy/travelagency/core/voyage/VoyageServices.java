@@ -25,8 +25,8 @@ public class VoyageServices {
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : TITRE IS NULL "), HttpStatus.BAD_REQUEST);
         if (voyage.getDescription() == null)
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : DESCRIPTION IS NULL "),HttpStatus.BAD_REQUEST);
-        if (voyage.getDate() == null)
-            return new ResponseEntity<>(new ErrorResponseEntity("ERROR : DATE IS NULL "), HttpStatus.BAD_REQUEST);
+        //if (voyage.getDate() == null)
+            //return new ResponseEntity<>(new ErrorResponseEntity("ERROR : DATE IS NULL "), HttpStatus.BAD_REQUEST);
         if (voyage.getNbPlaces() == null)
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : NB PLACE IS NULL "),HttpStatus.BAD_REQUEST);
         if (voyage.getPrix() == null)
@@ -49,7 +49,7 @@ public class VoyageServices {
         return voyageRepository.findAll();
     }
 
-    public ResponseEntity<?> getVoyage(@PathVariable int id) {
+    public ResponseEntity<?> getVoyage(int id) {
         Optional<Voyage> voyageOptional = voyageRepository.findById(id);
         if (!voyageOptional.isPresent())
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : VOYAGE NOT FOUND "),HttpStatus.BAD_REQUEST);
@@ -57,7 +57,7 @@ public class VoyageServices {
         return new ResponseEntity<>(voyageOptional.get(),HttpStatus.OK);
     }
 
-    public ResponseEntity<?> deleteVoyage(@PathVariable int id){
+    public ResponseEntity<?> deleteVoyage(int id){
         Optional<Voyage> voyageOptional = voyageRepository.findById(id);
         if (!voyageOptional.isPresent())
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : VOYAGE NOT FOUND "),HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class VoyageServices {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<?> updateVoyage(@PathVariable int id,@RequestBody Voyage voyage){
+    public ResponseEntity<?> updateVoyage(int id,Voyage voyage){
         Optional<Voyage> voyageOptional = voyageRepository.findById(id);
         if (!voyageOptional.isPresent()){
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR: VOYAGE NOT FOUND"), HttpStatus.BAD_REQUEST);
@@ -93,6 +93,10 @@ public class VoyageServices {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    public List<Voyage> getVoyageByPrice(double minPrice, double maxPrice){
+        return voyageRepository.getVoyageByPrixBetweenAndNbPlacesIsNot(minPrice,maxPrice,0);
     }
 
 }

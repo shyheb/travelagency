@@ -17,7 +17,7 @@ public class Destination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-    private Integer description;
+    private String description;
     @JsonIgnore
     @OneToMany(mappedBy = "destination")
     private List<Voyage> voyages;
