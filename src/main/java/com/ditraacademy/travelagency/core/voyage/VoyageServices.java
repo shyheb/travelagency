@@ -32,14 +32,8 @@ public class VoyageServices {
         if (voyage.getPrix() == null)
             return new ResponseEntity<>(new ErrorResponseEntity("ERROR : PRIX IS NULL "), HttpStatus.BAD_REQUEST);
 
-        if (voyage.getDestination().getId() == 0)
-            return new ResponseEntity<>(new ErrorResponseEntity("ERROR : ID DESTINATION IS NULL "), HttpStatus.BAD_REQUEST);
 
-        Optional<Destination> destinationOptional = destinationRepository.findById(voyage.getDestination().getId());
-        if (!destinationOptional.isPresent())
-            return new ResponseEntity<>(new ErrorResponseEntity("ERROR : DESTINATION IS NOT NOT FOUND "),HttpStatus.BAD_REQUEST);
 
-        voyage.setDestination(destinationOptional.get());
         voyage = voyageRepository.save(voyage);
 
         return  new ResponseEntity<>(voyage, HttpStatus.OK);

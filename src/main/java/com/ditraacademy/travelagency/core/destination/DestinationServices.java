@@ -61,7 +61,7 @@ public class DestinationServices {
         if (destinationLegency.getNom() != null)
             destinationLegency.setNom(destination.getNom());
 
-        if (destinationLegency.getDescription() == null)
+        if (destinationLegency.getDescription() != null)
             destinationLegency.setDescription(destination.getDescription());
 
         destinationRepository.save(destinationLegency);

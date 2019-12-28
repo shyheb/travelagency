@@ -2,6 +2,7 @@ package com.ditraacademy.travelagency.core.voyage;
 
 import com.ditraacademy.travelagency.core.destination.Destination;
 import com.ditraacademy.travelagency.utility.Audible;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,17 +17,25 @@ import java.util.Date;
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "update voyage set deleted=true where id=?")
 public class Voyage extends Audible<String> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String titre;
+
     private String description;
+
     private Date date;
+
     private Integer nbPlaces;
+
     private Double prix;
-    @ManyToOne
+
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Destination destination;
 
+    @JsonIgnore
     private Boolean deleted=false;
 
 
