@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/users")
     public List<User> afficheUsers(){
         return userServices.afficheUsers();
-    } 
+    }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<?> Afficheuser(@PathVariable int id){
